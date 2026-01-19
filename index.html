@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kasir Barokah</title>
+
+<style>
+:root{
+  --p1:#fbbf24;
+  --p2:#fde047;
+  --text:#0f172a;
+  --muted:#64748b;
+  --border:#e2e8f0;
+  --white:#ffffff;
+  --bg:#fffbea;
+  --dark:#111827;
+  --green:#16a34a;
+  --red:#ef4444;
+  --gray:#f1f5f9;
+  --shadow:0 18px 50px rgba(0,0,0,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+body{
+  min-height:100vh;
+  background:linear-gradient(180deg,var(--p1) 0%, var(--p2) 40%, var(--bg) 100%);
+  padding:16px;
+}
+.hide{display:none !important;}
+.small{font-size:12px}
+.hr{height:1px;background:#eef2f7;margin:10px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.bg-dots{
+  position:fixed; inset:0;
+  z-index:0;
+  pointer-events:none !important;
+  opacity:.10;
+  background-image:radial-gradient(#111827 1px, transparent 1px);
+  background-size:14px 14px;
+}
+
+.top-banner{
+  width:100%;
+  max-width:420px;
+  margin:0 auto 12px auto;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 12px 35px rgba(0,0,0,.18);
+}
+.top-banner img{width:100%;height:auto;display:block}
+
+.app{
+  max-width:420px;
+  margin:auto;
+  padding-bottom:120px;
+  position:relative;
+  z-index:2;
+}
+
+/* TOP */
+.topbar{
+  color:#111;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 6px;
+}
+.brand{display:flex;align-items:center;gap:10px}
+
+/* LOGO */
+.logo.img{
+  width:52px;height:52px;
+  border-radius:999px;
+  overflow:hidden;background:#fff;
+  border:2px solid rgba(255,255,255,.95);
+  box-shadow:0 10px 25px rgba(0,0,0,.18), 0 0 0 4px rgba(255,255,255,.28);
+}
+.logo.img img{
+  width:100%;height:100%;
+  object-fit:contain;
+  display:block;border-radius:999px;background:#fff;
+}
+.brand .ttl{font-weight:1000}
+.brand .sub{font-size:12px;opacity:.85;margin-top:2px;color:#111}
+
+.badge{
+  padding:10px 12px;border-radius:14px;
+  background:#fff;color:var(--text);
+  font-weight:1000;font-size:12px;
+  box-shadow:0 10px 26px rgba(0,0,0,.12);
+  cursor:pointer;
+}
+
+/* SALDO */
+.saldo{
+  margin-top:6px;
+  background:rgba(255,255,255,.50);
+  border:1px solid rgba(255,255,255,.6);
+  border-radius:22px;
+  padding:14px;
+  color:#111;
+  display:flex;justify-content:space-between;gap:10px;align-items:center;
+}
+.saldo .k{font-size:12px;opacity:.9}
+.saldo .v{font-size:22px;font-weight:1000;margin-top:4px}
+
+.section-title{
+  margin:12px 0 10px;
+  color:#111;font-weight:1000;font-size:13px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.section-title .link{font-size:12px;text-decoration:underline;cursor:pointer;opacity:.9}
+
+/* CARD */
+.card{
+  background:var(--white);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 16px 40px rgba(0,0,0,.11);
+  border-radius:22px;
+  padding:14px;
+}
+.card + .card{margin-top:12px}
+
+/* BUTTON */
+.btn{border:none;border-radius:16px;padding:12px 12px;font-weight:1000;cursor:pointer}
+.btn:active{transform:scale(.99)}
+.btn.p{background:var(--p1);color:#111}
+.btn.dark{background:var(--dark);color:#fff}
+.btn.gray{background:var(--gray);color:var(--text);border:1px solid var(--border)}
+.btn.green{background:var(--green);color:#fff}
+.btn.red{background:var(--red);color:#fff}
+.btn.full{width:100%}
+
+/* MENU */
+.menu{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.m{
+  background:#fff;border:1px solid #eef2f7;
+  box-shadow:0 10px 26px rgba(0,0,0,.07);
+  border-radius:18px;padding:12px 10px;
+  display:flex;flex-direction:column;gap:7px;align-items:center;
+  cursor:pointer;
+  user-select:none;
+}
+.m:active{transform:scale(.98)}
+.ico{width:42px;height:42px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:1000;color:#fff;}
+.ico.purple{background:#7c3aed}
+.ico.img{background:#fff !important;border:1px solid #eef2f7;overflow:hidden;padding:0;}
+.ico.img img{width:100%;height:100%;object-fit:cover;display:block;border-radius:16px;}
+.m .t{font-size:11px;font-weight:1000;color:var(--text);text-align:center}
+
+/* LIST */
+.item{
+  margin-top:10px;border:1px solid #eef2f7;border-radius:18px;
+  padding:12px;display:flex;justify-content:space-between;gap:10px;
+  align-items:flex-start;
+}
+.item .a{font-weight:1000;color:var(--text)}
+.item .b{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
+.item .amt{font-weight:1000;white-space:nowrap}
+
+/* INPUT */
+input,select,textarea{
+  width:100%;padding:12px;border-radius:14px;border:1px solid #e5e7eb;
+  outline:none;font-size:14px;
+}
+textarea{min-height:72px;resize:none}
+
+/* BOTTOM NAV */
+.bottom-space{height:100px}
+.bottom4{
+  position:fixed;left:0;right:0;bottom:0;
+  padding:12px 14px 18px;
+  z-index:999998;
+  background:linear-gradient(to top, rgba(255,251,234,1), rgba(255,251,234,0));
+  backdrop-filter: blur(12px);
+}
+.bottom4 .bar{
+  max-width:420px;margin:auto;
+  background:#fff;border:1px solid var(--border);
+  border-radius:22px;box-shadow:var(--shadow);
+  padding:10px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+}
+.navbtn{
+  border:none;background:#f8fafc;border:1px solid #eef2f7;border-radius:18px;
+  padding:10px 8px;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  font-weight:1000;color:var(--text);font-size:11px;
+}
+.navbtn.active{background:var(--p1);border-color:var(--p1);color:#111}
+.navbtn .ico3{
+  width:36px;height:36px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  background:#fff;border:1px solid #eef2f7;overflow:hidden;
+}
+.navbtn .ico3 img{width:100%;height:100%;object-fit:cover;border-radius:14px}
+
+/* MODAL */
+.modal-wrap{
+  position:fixed; inset:0;
+  z-index:999999;
+  background:rgba(0,0,0,.45);
+  display:flex;align-items:flex-end;justify-content:center;
+  padding:16px;padding-bottom:120px;
+}
+#modalWrap.hide{display:none !important;pointer-events:none !important;}
+.modal{width:100%;max-width:420px;background:#fff;border-radius:26px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.3);}
+.modal-head{
+  padding:14px 16px;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  color:#111;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.modal-head .ttl{font-weight:1000}
+.modal-body{padding:14px 16px}
+.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+
+/* LOGIN */
+.login-wrap{
+  position:fixed; inset:0; z-index:999997;
+  display:flex;align-items:center;justify-content:center;
+  padding:16px;
+}
+.login-card{
+  width:100%;max-width:420px;background:#fff;border-radius:26px;
+  box-shadow:0 30px 90px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.login-head{background:linear-gradient(135deg,var(--p1),var(--p2));color:#111;padding:18px 16px;}
+.login-head .t{font-size:18px;font-weight:1000}
+.login-head .d{margin-top:4px;font-size:12px;opacity:.92}
+.login-body{padding:16px}
+.pill{border:1px solid var(--border);background:#fff;border-radius:999px;padding:10px;display:flex;gap:8px;flex-wrap:wrap}
+.pill button{
+  flex:1;border:none;border-radius:999px;padding:10px;font-weight:1000;cursor:pointer;
+  background:var(--gray);color:var(--text);min-width:90px
+}
+.pill button.active{background:var(--p1);color:#111}
+</style>
+</head>
+
+<body>
+<div class="bg-dots"></div>
+
+<!-- LOGIN -->
+<div id="loginScreen" class="login-wrap">
+  <div class="login-card">
+    <div class="login-head">
+      <div class="t">Kasir Barokah • Multi User</div>
+      <div class="d">Admin / Kasir / Chef (PIN)</div>
+    </div>
+    <div class="login-body">
+
+      <div class="pill">
+        <button id="tabKasir" class="active" onclick="setLoginRole('kasir')">KASIR</button>
+        <button id="tabChef" onclick="setLoginRole('chef')">CHEF</button>
+        <button id="tabAdmin" onclick="setLoginRole('admin')">ADMIN</button>
+      </div>
+
+      <div id="kasirSelectWrap" style="margin-top:12px;">
+        <select id="kasirSelect">
+          <option value="tayawa">Kasir 1 • Tayawa</option>
+          <option value="uekuli">Kasir 2 • Uekuli</option>
+          <option value="tombiano">Kasir 3 • Tombiano</option>
+          <option value="matako">Kasir 4 • Matako</option>
+        </select>
+      </div>
+
+      <div id="chefSelectWrap" class="hide" style="margin-top:12px;">
+        <select id="chefSelect">
+          <option value="chefA">Chef 1 • Dapur A</option>
+          <option value="chefB">Chef 2 • Dapur B</option>
+        </select>
+      </div>
+
+      <div style="height:12px"></div>
+      <input id="pinInput" type="password" inputmode="numeric" placeholder="Masukkan PIN" />
+
+      <div class="small" style="color:var(--muted);margin-top:8px;line-height:1.65">
+        PIN Admin: <b>9999</b><br>
+        Kasir Tayawa: <b>1111</b> • Uekuli: <b>2222</b><br>
+        Tombiano: <b>3333</b> • Matako: <b>4444</b><br>
+        Chef Dapur A: <b>5555</b> • Dapur B: <b>6666</b>
+      </div>
+
+      <div style="height:12px"></div>
+      <button class="btn p full" onclick="doLogin()">LOGIN</button>
+
+      <div style="height:10px"></div>
+      <button class="btn gray full" onclick="resetAll()">Reset Semua (Jika lupa PIN)</button>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+
+  <!-- BANNER -->
+  <div class="top-banner">
+    <img src="https://i.ibb.co.com/RprQdb41/file-00000000cbd4720686f3e895ca9e4cea.png" alt="Banner Barokah Management">
+  </div>
+
+  <!-- TOP -->
+  <div class="topbar">
+    <div class="brand">
+      <!-- ✅ LOGO BARU -->
+      <div class="logo img">
+        <img src="https://i.ibb.co.com/ks2XWzrf/file-000000006b847209b735b455b25bbca1.png" alt="Logo Barokah">
+      </div>
+      <div>
+        <div class="ttl">Kasir Barokah</div>
+        <div class="sub" id="roleLabel">Belum Login</div>
+      </div>
+    </div>
+    <div class="badge" onclick="logout()">Logout</div>
+  </div>
+
+  <!-- HOME -->
+  <div id="pageHome">
+    <div class="saldo">
+      <div>
+        <div class="k">Saldo Bersih</div>
+        <div class="v" id="saldoBersih">Rp 0</div>
+        <div class="k" style="margin-top:4px">Omset: <b id="omset">Rp 0</b></div>
+      </div>
+      <div class="badge">PRO</div>
+    </div>
+
+    <div class="section-title">
+      <div>Menu Cepat</div>
+      <div style="display:flex;gap:14px">
+        <div class="link roleKasir roleChef" onclick="openModal('shift')">Shift</div>
+        <div class="link adminOnly" onclick="openModal('laporan')">Laporan</div>
+      </div>
+    </div>
+
+    <!-- MENU -->
+    <div class="menu">
+      <!-- ADMIN -->
+      <div class="m adminOnly" onclick="openModal('pemasukan')">
+        <div class="ico img"><img src="https://i.ibb.co.com/VpLFpZrg/uang.png"></div><div class="t">Pemasukan</div>
+      </div>
+      <div class="m adminOnly" onclick="openModal('pengeluaran')">
+        <div class="ico img"><img src="https://i.ibb.co.com/1Y8Wbw6g/images-2.png"></div><div class="t">Pengeluaran</div>
+      </div>
+
+      <!-- KASIR -->
+      <div class="m kasirOnly" onclick="openModal('produkTambah')">
+        <div class="ico img"><img src="https://i.ibb.co.com/JjF1PsLw/6565c9b69d0481f50c16e2ee-all-products.png"></div><div class="t">Tambah Produk</div>
+      </div>
+      <div class="m kasirOnly" onclick="goTab('kasir')">
+        <div class="ico img"><img src="https://i.ibb.co.com/r2rC3zjQ/register-3947348-1280.jpg"></div><div class="t">Kasir</div>
+      </div>
+
+      <!-- UMUM -->
+      <div class="m" onclick="goTab('produk')">
+        <div class="ico img"><img src="https://i.ibb.co.com/5hnT1sVW/477-4772225-packing-unpacking-services-product-icon-blue-png.jpg"></div><div class="t">Produk</div>
+      </div>
+      <div class="m" onclick="goTab('akun')">
+        <div class="ico img"><img src="https://i.ibb.co.com/pcmFZ7b/images-6.jpg"></div><div class="t">Akun</div>
+      </div>
+
+      <!-- CHEF -->
+      <div class="m chefOnly" onclick="openModal('stok')">
+        <div class="ico purple">🔎</div><div class="t">Stok</div>
+      </div>
+      <div class="m chefOnly" onclick="openModal('belanja')">
+        <div class="ico purple">🧺</div><div class="t">Belanja</div>
+      </div>
+
+      <!-- REPORT -->
+      <div class="m adminOnly" onclick="openModal('laporanKasir')">
+        <div class="ico purple">📊</div><div class="t">Per Kasir</div>
+      </div>
+      <div class="m adminOnly" onclick="openModal('lapKeu')">
+        <div class="ico purple">📅</div><div class="t">Keuangan</div>
+      </div>
+
+      <!-- KARYAWAN -->
+      <div class="m adminOnly" onclick="openModal('karyawan')">
+        <div class="ico purple">👥</div><div class="t">Karyawan</div>
+      </div>
+      <div class="m adminOnly" onclick="openModal('absensi')">
+        <div class="ico purple">🕒</div><div class="t">Absensi</div>
+      </div>
+      <div class="m adminOnly" onclick="openModal('kasbon')">
+        <div class="ico purple">💳</div><div class="t">Kasbon</div>
+      </div>
+      <div class="m adminOnly" onclick="openModal('gaji')">
+        <div class="ico purple">💵</div><div class="t">Gaji</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div style="font-weight:1000;margin-bottom:6px">Riwayat Terakhir</div>
+      <div class="small" style="color:var(--muted)">Klik transaksi untuk detail (Admin)</div>
+      <div id="riwayat"></div>
+    </div>
+  </div>
+
+  <!-- PRODUK -->
+  <div id="pageProduk" class="hide">
+    <div class="card">
+      <div style="font-weight:1000;margin-bottom:8px">📦 Produk</div>
+      <div class="small" style="color:var(--muted)">Chef bisa restock lewat Belanja / Stok</div>
+    </div>
+    <div class="card">
+      <input id="produkCari" placeholder="Cari produk..." oninput="renderProduk()"/>
+      <div id="produkList"></div>
+    </div>
+  </div>
+
+  <!-- KASIR -->
+  <div id="pageKasir" class="hide">
+    <div class="card">
+      <div style="font-weight:1000;margin-bottom:6px">🧾 Kasir</div>
+      <button class="btn gray full" onclick="openModal('addBySelect')">+ Tambah Produk ke Cart</button>
+
+      <div class="hr"></div>
+      <div style="font-weight:1000;margin-bottom:6px">Keranjang</div>
+      <div id="cartList"></div>
+
+      <div class="hr"></div>
+      <div class="grid">
+        <div>
+          <div class="small" style="color:var(--muted)">Total</div>
+          <div style="font-weight:1000;font-size:18px" id="cartTotal">Rp 0</div>
+        </div>
+        <button class="btn green" onclick="openModal('bayar')">Bayar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AKUN -->
+  <div id="pageAkun" class="hide">
+    <div class="card">
+      <div style="font-weight:1000;margin-bottom:6px">👤 Akun</div>
+      <div class="small" style="color:var(--muted)" id="akunInfo">-</div>
+
+      <div class="hr"></div>
+      <div class="grid adminOnly">
+        <button class="btn p" onclick="openModal('arsip')">Arsip</button>
+        <button class="btn dark" onclick="openModal('pin')">PIN</button>
+      </div>
+
+      <div style="height:12px"></div>
+      <button class="btn gray full" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="bottom-space"></div>
+</div>
+
+<!-- Bottom Nav -->
+<div class="bottom4">
+  <div class="bar">
+    <button class="navbtn active" id="navHome" onclick="goTab('home')">
+      <div class="ico3"><img src="https://i.ibb.co.com/VpLFpZrg/uang.png"></div>Home
+    </button>
+    <button class="navbtn" id="navProduk" onclick="goTab('produk')">
+      <div class="ico3"><img src="https://i.ibb.co.com/5hnT1sVW/477-4772225-packing-unpacking-services-product-icon-blue-png.jpg"></div>Produk
+    </button>
+    <button class="navbtn" id="navKasir" onclick="goTab('kasir')">
+      <div class="ico3"><img src="https://i.ibb.co.com/r2rC3zjQ/register-3947348-1280.jpg"></div>Kasir
+    </button>
+    <button class="navbtn" id="navAkun" onclick="goTab('akun')">
+      <div class="ico3"><img src="https://i.ibb.co.com/pcmFZ7b/images-6.jpg"></div>Akun
+    </button>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="modalWrap" class="modal-wrap hide" onclick="closeModalBg(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <div class="ttl" id="modalTitle">Form</div>
+      <button class="btn gray" style="padding:8px 10px;border-radius:12px" onclick="closeModal()">Tutup</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* ========= DATABASE ========= */
+const KEY="KASIR_BAROKAH_FULL_V2_KARYAWAN";
+
+function dbLoad(){
+  try{
+    const raw=localStorage.getItem(KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return {
+    session:{role:null, userKey:null, userName:null},
+    pin:{
+      admin:"9999",
+      kasir:{ tayawa:"1111", uekuli:"2222", tombiano:"3333", matako:"4444" },
+      chef:{ chefA:"5555", chefB:"6666" }
+    },
+    kasir:[],
+    products:[],
+    cart:[],
+    shiftLogs:[],
+    stockLogs:[],
+    reportLogs:[],
+
+    employees:[],
+    attendance:[],
+    kasbon:[],
+    salary:[]
+  };
+}
+function dbSave(db){localStorage.setItem(KEY,JSON.stringify(db));}
+function id(){return "id_"+Math.random().toString(16).slice(2)+"_"+Date.now();}
+function rupiah(n){return "Rp "+Number(n||0).toLocaleString("id-ID");}
+function nowStr(){ return new Date().toLocaleString("id-ID");}
+function esc(s){return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
+function monthKey(d=new Date()){
+  const yy=d.getFullYear();
+  const mm=String(d.getMonth()+1).padStart(2,"0");
+  return `${yy}-${mm}`;
+}
+
+const namaKasirMap={ tayawa:"Tayawa", uekuli:"Uekuli", tombiano:"Tombiano", matako:"Matako" };
+const namaChefMap={ chefA:"Chef Dapur A", chefB:"Chef Dapur B" };
+
+/* ========= LOGIN ========= */
+let loginRole="kasir";
+function setLoginRole(r){
+  loginRole=r;
+  document.getElementById("tabKasir").classList.toggle("active", r==="kasir");
+  document.getElementById("tabChef").classList.toggle("active", r==="chef");
+  document.getElementById("tabAdmin").classList.toggle("active", r==="admin");
+
+  document.getElementById("kasirSelectWrap").classList.toggle("hide", r!=="kasir");
+  document.getElementById("chefSelectWrap").classList.toggle("hide", r!=="chef");
+}
+function doLogin(){
+  const db=dbLoad();
+  const pin=document.getElementById("pinInput").value.trim();
+
+  if(loginRole==="admin"){
+    if(pin!==db.pin.admin){ alert("PIN Admin salah!"); return; }
+    db.session={role:"admin", userKey:"admin", userName:"Admin"};
+    dbSave(db); initSession(); return;
+  }
+
+  if(loginRole==="chef"){
+    const chefKey=document.getElementById("chefSelect").value;
+    if(pin!==db.pin.chef[chefKey]){ alert("PIN Chef salah!"); return; }
+    db.session={role:"chef", userKey:chefKey, userName:namaChefMap[chefKey]};
+    dbSave(db); initSession(); return;
+  }
+
+  const kasirKey=document.getElementById("kasirSelect").value;
+  if(pin!==db.pin.kasir[kasirKey]){ alert("PIN Kasir salah!"); return; }
+  db.session={role:"kasir", userKey:kasirKey, userName:namaKasirMap[kasirKey]};
+  dbSave(db); initSession();
+}
+function logout(){
+  const db=dbLoad();
+  db.session={role:null,userKey:null,userName:null};
+  dbSave(db);
+  initSession();
+}
+
+/* ========= SESSION INIT ========= */
+function initSession(){
+  const db=dbLoad();
+  const role=db.session.role;
+  document.getElementById("loginScreen").classList.toggle("hide", !!role);
+
+  let label="Belum Login";
+  if(role) label=`Role: ${role.toUpperCase()} • ${db.session.userName||""}`;
+  document.getElementById("roleLabel").innerText=label;
+
+  document.getElementById("akunInfo").innerHTML=`
+    Role: <b>${esc(role||"-")}</b><br>
+    Nama: <b>${esc(db.session.userName||"-")}</b>
+  `;
+
+  document.querySelectorAll(".adminOnly").forEach(el=> el.classList.toggle("hide", role!=="admin"));
+  document.querySelectorAll(".kasirOnly").forEach(el=> el.classList.toggle("hide", role!=="kasir"));
+  document.querySelectorAll(".chefOnly").forEach(el=> el.classList.toggle("hide", role!=="chef"));
+
+  document.querySelectorAll(".roleKasir").forEach(el=> el.classList.toggle("hide", role!=="kasir"));
+  document.querySelectorAll(".roleChef").forEach(el=> el.classList.toggle("hide", role!=="chef"));
+
+  renderAll();
+  goTab("home");
+}
+
+/* ========= NAV ========= */
+function goTab(tab){
+  ["pageHome","pageProduk","pageKasir","pageAkun"].forEach(x=>document.getElementById(x).classList.add("hide"));
+  ["navHome","navProduk","navKasir","navAkun"].forEach(x=>document.getElementById(x).classList.remove("active"));
+
+  if(tab==="produk"){document.getElementById("pageProduk").classList.remove("hide");document.getElementById("navProduk").classList.add("active");}
+  else if(tab==="kasir"){document.getElementById("pageKasir").classList.remove("hide");document.getElementById("navKasir").classList.add("active");}
+  else if(tab==="akun"){document.getElementById("pageAkun").classList.remove("hide");document.getElementById("navAkun").classList.add("active");}
+  else {document.getElementById("pageHome").classList.remove("hide");document.getElementById("navHome").classList.add("active");}
+
+  renderAll();
+}
+
+/* ========= CALC ========= */
+function calc(){
+  const db=dbLoad();
+  let masuk=0, keluar=0, omset=0, profit=0;
+  db.kasir.forEach(x=>{
+    if(x.type==="in") masuk+=x.amount||0;
+    if(x.type==="out") keluar+=x.amount||0;
+    if(x.type==="sale"){omset+=x.amount||0;profit+=x.profit||0;}
+  });
+  return {masuk,keluar,omset,profit,net:(profit+masuk-keluar)};
+}
+function calcPerKasir(){
+  const db=dbLoad();
+  const map={ tayawa:{omset:0,profit:0,tx:0}, uekuli:{omset:0,profit:0,tx:0}, tombiano:{omset:0,profit:0,tx:0}, matako:{omset:0,profit:0,tx:0} };
+  db.kasir.forEach(x=>{
+    if(x.type==="sale"){
+      const k=x.kasirKey||"";
+      if(map[k]){
+        map[k].omset += x.amount||0;
+        map[k].profit += x.profit||0;
+        map[k].tx += 1;
+      }
+    }
+  });
+  return map;
+}
+
+/* ========= RENDER ========= */
+function renderHome(){
+  const s=calc();
+  document.getElementById("saldoBersih").innerText=rupiah(s.net);
+  document.getElementById("omset").innerText=rupiah(s.omset);
+
+  const db=dbLoad();
+  const riw=document.getElementById("riwayat");
+  riw.innerHTML="";
+  const list=db.kasir.slice(0,10);
+  if(!list.length){
+    riw.innerHTML=`<div class="item"><div><div class="a">Belum ada data</div><div class="b">Mulai input transaksi</div></div><div class="amt">-</div></div>`;
+    return;
+  }
+  list.forEach(it=>{
+    const canOpen = db.session.role==="admin";
+    riw.insertAdjacentHTML("beforeend",`
+      <div class="item" style="${canOpen?'cursor:pointer':''}" onclick="${canOpen?`openReceiptById('${it.id}')`:''}">
+        <div>
+          <div class="a">${esc(it.title)}</div>
+          <div class="b">${esc(it.time||"")}</div>
+        </div>
+        <div class="amt">${rupiah(it.amount||0)}</div>
+      </div>
+    `);
+  });
+}
+
+function renderProduk(){
+  const db=dbLoad();
+  const q=(document.getElementById("produkCari")?.value||"").toLowerCase().trim();
+  const list=document.getElementById("produkList");
+  list.innerHTML="";
+  let items=db.products;
+  if(q) items=items.filter(p=>(p.name||"").toLowerCase().includes(q));
+  if(!items.length){
+    list.innerHTML=`<div class="item"><div><div class="a">Belum ada produk</div><div class="b">Tambah produk dulu</div></div><div class="amt">-</div></div>`;
+    return;
+  }
+  items.forEach(p=>{
+    const stokBadge = p.stock<=0
+      ? `<span style="color:#fff;background:#ef4444;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:1000">Habis</span>`
+      : `<span style="color:#111;background:#fbbf24;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:1000">Tersedia</span>`;
+    list.insertAdjacentHTML("beforeend",`
+      <div class="item">
+        <div>
+          <div class="a">${esc(p.name)} ${stokBadge}</div>
+          <div class="b">Stok: <b>${p.stock}</b> • Harga: <b>${rupiah(p.price)}</b></div>
+        </div>
+        <div>
+          <button class="btn dark" style="padding:8px 10px;border-radius:12px" onclick="addToCart('${p.id}')">+Cart</button>
+        </div>
+      </div>
+    `);
+  });
+}
+
+function renderCart(){
+  const db=dbLoad();
+  const list=document.getElementById("cartList");
+  list.innerHTML="";
+  if(!db.cart.length){
+    list.innerHTML=`<div class="item"><div><div class="a">Keranjang kosong</div><div class="b">Tambah produk</div></div><div class="amt">-</div></div>`;
+    document.getElementById("cartTotal").innerText=rupiah(0);
+    return;
+  }
+  let total=0;
+  db.cart.forEach(ci=>{
+    const p=db.products.find(x=>x.id===ci.productId);
+    if(!p) return;
+    const sub=p.price*ci.qty;
+    total+=sub;
+    list.insertAdjacentHTML("beforeend",`
+      <div class="item">
+        <div>
+          <div class="a">${esc(p.name)} x${ci.qty}</div>
+          <div class="b">${rupiah(sub)}</div>
+        </div>
+        <div class="amt">
+          <button class="btn gray" style="padding:8px 10px" onclick="cartQty('${p.id}',-1)">-</button>
+          <button class="btn gray" style="padding:8px 10px" onclick="cartQty('${p.id}',1)">+</button>
+        </div>
+      </div>
+    `);
+  });
+  document.getElementById("cartTotal").innerText=rupiah(total);
+}
+
+function renderAll(){
+  renderHome();
+  renderProduk();
+  renderCart();
+}
+
+/* ========= PRODUCT/CART ========= */
+function saveProduct(){
+  const name=document.getElementById("prodName").value.trim();
+  const price=Number(document.getElementById("prodPrice").value||0);
+  const stock=Number(document.getElementById("prodStock").value||0);
+  const cost=Number(document.getElementById("prodCost").value||0);
+  if(!name||price<=0){alert("Isi nama & harga");return;}
+  const db=dbLoad();
+  db.products.unshift({id:id(),name,price,stock,cost});
+  dbSave(db); closeModal(); renderAll();
+}
+function addToCart(pid){
+  const db=dbLoad();
+  const p=db.products.find(x=>x.id===pid);
+  if(!p){alert("Produk tidak ada");return;}
+  if(p.stock<=0){alert("Stok habis");return;}
+  let c=db.cart.find(x=>x.productId===pid);
+  if(!c) db.cart.unshift({productId:pid,qty:1});
+  else{
+    if(c.qty+1>p.stock){alert("Stok tidak cukup");return;}
+    c.qty++;
+  }
+  dbSave(db); renderCart();
+}
+function cartQty(pid,d){
+  const db=dbLoad();
+  const p=db.products.find(x=>x.id===pid);
+  const c=db.cart.find(x=>x.productId===pid);
+  if(!p||!c) return;
+  c.qty+=d;
+  if(c.qty<=0) db.cart=db.cart.filter(x=>x.productId!==pid);
+  if(c.qty>p.stock) c.qty=p.stock;
+  dbSave(db); renderCart();
+}
+function payNow(){
+  const db=dbLoad();
+  const cash=Number(document.getElementById("payCash").value||0);
+  let total=0, profit=0;
+
+  for(const ci of db.cart){
+    const p=db.products.find(x=>x.id===ci.productId);
+    if(!p) continue;
+    total += p.price*ci.qty;
+    profit += (p.price-(p.cost||0))*ci.qty;
+  }
+  if(cash<total){alert("Uang kurang");return;}
+
+  for(const ci of db.cart){
+    const p=db.products.find(x=>x.id===ci.productId);
+    if(p) p.stock-=ci.qty;
+  }
+
+  db.kasir.unshift({
+    id:id(),
+    type:"sale",
+    title:"Transaksi Kasir ("+(db.session.userName||"")+")",
+    amount:total,
+    profit,
+    kasirKey: db.session.userKey,
+    kasirName: db.session.userName,
+    time:nowStr(),
+    ts:Date.now()
+  });
+
+  db.cart=[];
+  dbSave(db);
+  closeModal();
+  renderAll();
+  alert("✅ Sukses! Total "+rupiah(total)+" Kembali "+rupiah(cash-total));
+}
+
+/* ========= SHIFT ========= */
+function shiftMasuk(){
+  const db=dbLoad();
+  const role=db.session.role;
+  if(!role){alert("Belum login");return;}
+  if(role==="admin"){alert("Admin tidak pakai shift");return;}
+
+  db.shiftLogs.unshift({
+    id:id(),
+    role,
+    userKey:db.session.userKey,
+    userName:db.session.userName,
+    inTime: nowStr(),
+    outTime: null,
+    ts: Date.now()
+  });
+  dbSave(db);
+  closeModal();
+  alert("✅ Shift MASUK: "+db.session.userName);
+}
+function shiftPulang(){
+  const db=dbLoad();
+  const role=db.session.role;
+  if(!role){alert("Belum login");return;}
+  if(role==="admin"){alert("Admin tidak pakai shift");return;}
+
+  const last=db.shiftLogs.find(x=>x.userKey===db.session.userKey && x.role===role && !x.outTime);
+  if(!last){alert("Belum ada shift masuk");return;}
+  last.outTime=nowStr();
+  dbSave(db);
+  closeModal();
+  alert("✅ Shift PULANG: "+db.session.userName);
+}
+
+/* ========= CHEF STOCK ========= */
+function chefRestock(){
+  const db=dbLoad();
+  if(db.session.role!=="chef"){alert("Menu khusus CHEF");return;}
+
+  const pid=document.getElementById("restockPid").value;
+  const qty=Number(document.getElementById("restockQty").value||0);
+  if(!pid || qty<=0){alert("Pilih produk & qty");return;}
+
+  const p=db.products.find(x=>x.id===pid);
+  if(!p){alert("Produk tidak ditemukan");return;}
+  p.stock += qty;
+
+  db.stockLogs.unshift({
+    id:id(),
+    chefKey:db.session.userKey,
+    chefName:db.session.userName,
+    productId:pid,
+    name:p.name,
+    qty,
+    type:"restock",
+    time:nowStr(),
+    ts:Date.now()
+  });
+
+  dbSave(db);
+  closeModal();
+  renderAll();
+  alert("✅ Restock berhasil: "+p.name+" +"+qty);
+}
+function chefSetHabis(){
+  const db=dbLoad();
+  if(db.session.role!=="chef"){alert("Menu khusus CHEF");return;}
+  const pid=document.getElementById("habisPid").value;
+  const p=db.products.find(x=>x.id===pid);
+  if(!p){alert("Produk tidak ada");return;}
+  p.stock=0;
+  db.stockLogs.unshift({
+    id:id(),
+    chefKey:db.session.userKey,
+    chefName:db.session.userName,
+    productId:pid,
+    name:p.name,
+    qty:0,
+    type:"habis",
+    time:nowStr(),
+    ts:Date.now()
+  });
+  dbSave(db); closeModal(); renderAll();
+  alert("✅ Stok dibuat HABIS: "+p.name);
+}
+
+/* ========= IN/OUT ========= */
+function saveIncome(){
+  const db=dbLoad();
+  const title=document.getElementById("inTitle").value.trim();
+  const amount=Number(document.getElementById("inAmount").value||0);
+  if(!title||amount<=0){alert("Isi judul & nominal!");return;}
+  db.kasir.unshift({id:id(),type:"in",title,amount,time:nowStr(),ts:Date.now()});
+  dbSave(db); closeModal(); renderAll();
+}
+function saveExpense(){
+  const db=dbLoad();
+  const title=document.getElementById("outTitle").value.trim();
+  const amount=Number(document.getElementById("outAmount").value||0);
+  if(!title||amount<=0){alert("Isi judul & nominal!");return;}
+  db.kasir.unshift({id:id(),type:"out",title,amount,time:nowStr(),ts:Date.now()});
+  dbSave(db); closeModal(); renderAll();
+}
+
+/* ========= KARYAWAN ========= */
+function addEmployee(){
+  const db=dbLoad();
+  const name=document.getElementById("empName").value.trim();
+  const phone=document.getElementById("empPhone").value.trim();
+  const role=document.getElementById("empRole").value.trim();
+  if(!name){alert("Nama karyawan wajib");return;}
+  db.employees.unshift({id:id(),name,phone,role});
+  dbSave(db); closeModal(); alert("✅ Karyawan ditambahkan"); renderAll();
+}
+function absensi(type){
+  const db=dbLoad();
+  const empId=document.getElementById("empSelect").value;
+  const emp=db.employees.find(x=>x.id===empId);
+  if(!emp){alert("Pilih karyawan");return;}
+  db.attendance.unshift({
+    id:id(),
+    empId:emp.id,
+    empName:emp.name,
+    type,
+    time:nowStr(),
+    ts:Date.now()
+  });
+  dbSave(db); closeModal();
+  alert("✅ Absensi "+(type==="in"?"MASUK":"PULANG")+" : "+emp.name);
+}
+function addKasbon(){
+  const db=dbLoad();
+  const empId=document.getElementById("kasbonEmp").value;
+  const amount=Number(document.getElementById("kasbonAmount").value||0);
+  const note=document.getElementById("kasbonNote").value.trim();
+  const emp=db.employees.find(x=>x.id===empId);
+  if(!emp){alert("Pilih karyawan");return;}
+  if(amount<=0){alert("Nominal kasbon wajib");return;}
+  db.kasbon.unshift({
+    id:id(),
+    empId:emp.id,
+    empName:emp.name,
+    amount,
+    note,
+    time:nowStr(),
+    ts:Date.now()
+  });
+  dbSave(db); closeModal();
+  alert("✅ Kasbon disimpan: "+emp.name);
+}
+function addGaji(){
+  const db=dbLoad();
+  const empId=document.getElementById("gajiEmp").value;
+  const amount=Number(document.getElementById("gajiAmount").value||0);
+  const month=document.getElementById("gajiMonth").value || monthKey(new Date());
+  const note=document.getElementById("gajiNote").value.trim();
+  const emp=db.employees.find(x=>x.id===empId);
+  if(!emp){alert("Pilih karyawan");return;}
+  if(amount<=0){alert("Nominal gaji wajib");return;}
+  db.salary.unshift({
+    id:id(),
+    empId:emp.id,
+    empName:emp.name,
+    amount,
+    month,
+    note,
+    time:nowStr(),
+    ts:Date.now()
+  });
+  dbSave(db); closeModal();
+  alert("✅ Gaji disimpan: "+emp.name);
+}
+
+/* ========= RECEIPT ========= */
+function openReceiptById(txId){
+  const db=dbLoad();
+  if(db.session.role!=="admin") return;
+  const tx=db.kasir.find(x=>x.id===txId);
+  if(!tx) return;
+  openModalHTML("Detail Transaksi",`
+    <div class="small" style="color:var(--muted);line-height:1.7">
+      Jenis: <b>${esc(tx.type)}</b><br>
+      Judul: <b>${esc(tx.title)}</b><br>
+      Waktu: <b>${esc(tx.time||"-")}</b><br>
+      Nominal: <b>${rupiah(tx.amount||0)}</b><br>
+      ${(tx.type==="sale")?`Kasir: <b>${esc(tx.kasirName||"-")}</b><br>Profit: <b>${rupiah(tx.profit||0)}</b>`:""}
+    </div>
+    <div class="modal-actions">
+      <button class="btn red" onclick="deleteTx('${tx.id}')">Hapus</button>
+      <button class="btn gray" onclick="closeModal()">Tutup</button>
+    </div>
+  `);
+}
+function deleteTx(txId){
+  const db=dbLoad();
+  if(db.session.role!=="admin"){alert("Khusus Admin");return;}
+  if(!confirm("Hapus transaksi ini?")) return;
+  db.kasir=db.kasir.filter(x=>x.id!==txId);
+  dbSave(db);
+  closeModal();
+  renderAll();
+}
+
+/* ========= MODAL ========= */
+function closeModalBg(e){ if(e.target.id==="modalWrap") closeModal(); }
+function closeModal(){
+  const w=document.getElementById("modalWrap");
+  w.classList.add("hide"); w.style.display="none"; w.style.pointerEvents="none";
+}
+function openModalHTML(ttl, html){
+  const w=document.getElementById("modalWrap");
+  w.classList.remove("hide");
+  w.style.display="flex";
+  w.style.pointerEvents="auto";
+  document.getElementById("modalTitle").innerText=ttl;
+  document.getElementById("modalBody").innerHTML=html;
+}
+
+function openModal(type){
+  const db=dbLoad();
+  const role=db.session.role;
+
+  const adminTypes=["pemasukan","pengeluaran","laporan","laporanKasir","lapKeu","karyawan","absensi","kasbon","gaji"];
+  if(adminTypes.includes(type) && role!=="admin"){
+    openModalHTML("Akses Ditolak",`
+      <div class="small" style="color:var(--muted)">Menu ini khusus ADMIN</div>
+      <div class="modal-actions">
+        <button class="btn gray" onclick="closeModal()">Tutup</button>
+        <button class="btn dark" onclick="closeModal()">OK</button>
+      </div>
+    `);
+    return;
+  }
+
+  if(type==="shift"){
+    openModalHTML("Shift",`
+      <div class="small" style="color:var(--muted);line-height:1.7">
+        User aktif: <b>${esc(db.session.userName||"-")}</b><br>
+        Role: <b>${esc(db.session.role||"-")}</b>
+      </div>
+      <div style="height:10px"></div>
+      <div class="modal-actions">
+        <button class="btn green" onclick="shiftMasuk()">Masuk</button>
+        <button class="btn red" onclick="shiftPulang()">Pulang</button>
+      </div>
+      <div style="height:10px"></div>
+      <button class="btn gray full" onclick="closeModal()">Tutup</button>
+    `);
+    return;
+  }
+
+  if(type==="stok"){
+    const ops=db.products.map(p=>`<option value="${p.id}">${esc(p.name)} (stok:${p.stock})</option>`).join("");
+    const logs=db.stockLogs.slice(0,15).map(x=>`
+      <div class="item">
+        <div>
+          <div class="a">${esc(x.name)} • ${x.type==="restock"?"Restock":"Habis"}</div>
+          <div class="b">${esc(x.time||"")}<br>Chef: ${esc(x.chefName||"")}</div>
+        </div>
+        <div class="amt">${x.type==="restock"?("+"+x.qty):"0"}</div>
+      </div>
+    `).join("");
+    openModalHTML("Stok Produk",`
+      <select id="habisPid">${ops || `<option value="">Belum ada produk</option>`}</select>
+      <div style="height:10px"></div>
+      <button class="btn red full" onclick="chefSetHabis()">Tandai Stok Habis</button>
+      <div class="hr"></div>
+      ${logs || `<div class="item"><div><div class="a">Belum ada log</div><div class="b">Mulai restock/buat habis</div></div><div class="amt">-</div></div>`}
+      <div style="height:10px"></div>
+      <button class="btn gray full" onclick="closeModal()">Tutup</button>
+    `);
+    return;
+  }
+
+  if(type==="belanja"){
+    const ops=db.products.map(p=>`<option value="${p.id}">${esc(p.name)} (stok:${p.stock})</option>`).join("");
+    openModalHTML("Belanja Bahan (Restock)",`
+      <select id="restockPid">${ops || `<option value="">Belum ada produk</option>`}</select>
+      <div style="height:10px"></div>
+      <input id="restockQty" type="number" min="1" placeholder="Qty restock"/>
+      <div class="modal-actions">
+        <button class="btn green" onclick="chefRestock()">Simpan</button>
+        <button class="btn gray" onclick="closeModal()">Batal</button>
+      </div>
+    `);
+    return;
+  }
+
+  if(type==="pemasukan"){
+    openModalHTML("Pemasukan",`
+      <input id="inTitle" placeholder="Judul pemasukan"/>
+      <div style="height:10px"></div>
+      <input id="inAmount" type="number" placeholder="Nominal"/>
+      <div class="modal-actions">
+        <button class="btn green" onclick="saveIncome()">Simpan</button>
+        <button class="btn gray" onclick="closeModal()">Batal</button>
+      </div>
+    `);
+    return;
+  }
+
+  if(type==="pengeluaran"){
+    openModalHTML("Pengeluaran",`
+      <input id="outTitle" placeholder="Judul pengeluaran"/>
+      <div style="height:10px"></div>
+      <input id="outAmount" type="number" placeholder="Nominal"/>
+      <div class="modal-actions">
+        <button class="btn red" onclick="saveExpense()">Simpan</button>
+        <button class="btn gray" onclick="closeModal()">Batal</button>
+      </div>
+    `);
+    return;
+  }
+
+  if(type==="laporan"){
+    const s=calc();
+    openModalHTML("Laporan Umum",`
+      <div class="small" style="color:var(--muted);line-height:1.85">
+        Omset: <b>${rupiah(s.omset)}</b><br>
+        Profit: <b>${rupiah(s.profit)}</b><br>
+        Pemasukan: <b>${rupiah(s.masuk)}</b><br>
+        Pengeluaran: <b>${rupiah(s.keluar)}</b><br>
+        Saldo Bersih: <b>${rupiah(s.net)}</b>
+      </div>
+      <div style="height:10px"></div>
+      <button class="btn gray full" onclick="closeModal()">Tutup</button>
+    `);
+    return;
+  }
+
+  if(type==="laporanKasir"){
+    const map=calcPerKasir();
+    const card=(k)=>`
+      <div class="item">
+        <div>
+          <div class="a">${namaKasirMap[k]}</div>
+          <div class="b">Transaksi: <b>${map[k].tx}</b> • Profit: <b>${rupiah(map[k].profit)}</b></div>
+        </div>
+        <div class="amt">${rupiah(map[k].omset)}</div>
+      </div>
+    `;
+    openModalHTML("Laporan Per Kasir",`
+      ${card("tayawa")}${card("uekuli")}${card("tombiano")}${card("matako")}
+      <div style="height:10px"></div>
+      <button class="btn gray full" onclick="closeModal()">Tutup</button>
+    `);
+    return;
+  }
+
+  if(type==="lapKeu"){
+    openModalHTML("Laporan Keuangan",`
+      <div class="small" style="color:var(--muted)">Versi ini sudah ada laporan umum & per kasir.</div>
+      <div style="height:10px"></div>
+      <button class="btn gray full" onclick="closeModal()">Tutup</button>
+    `);
+    return;
+  }
+
+  if(type==="karyawan"){
+    const list=db.employees.map(e=>`
+      <div class="item">
+        <div>
+          <div class="a">${esc(e.name)}</div>
+          <div class="b">${esc(e.role||"-")} • ${esc(e.phone||"-")}</div>
+        </div>
+        <div class="amt">👤</div>
+      </div>
+    `).join("");
+
+    openModalHTML("Karyawan",`
+      <input id="empName" placeholder="Nama karyawan"/>
+      <div style="height:10px"></div>
+      <input id="empRole" placeholder="Jabatan (kasir/chef/pelayan)"/>
+      <div style="height:10px"></div>
+      <input id="empPhone" placeholder="No HP (optional)"/>
+      <div class="modal-actions">
+        <button class="btn p" onclick="addEmployee()">Tambah</button>
+        <button class="btn gray" onclick="closeModal()">Tutup</button>
+      </div>
+      <div class="hr"></div>
+      ${list || `<div class="item"><div><div class="a">Belum ada karyawan</div><div class="b">Tambah dulu</div></div><div class="amt">-</div></div>`}
+    `);
+    return;
+  }
+
+  if(type==="absensi"){
+    const ops=db.employees.map(e=>`<option value="${e.id}">${esc(e.name)} (${esc(e.role||"-")})</option>`).join("");
+    const logs=db.attendance.slice(0,15).map(x=>`
+      <div class="item">
+        <div>
+          <div class="a">${esc(x.empName)} • ${x.type==="in"?"Masuk":"Pulang"}</div>
+          <div class="b">${esc(x.time||"")}</div>
+        </div>
+        <div class="amt">${x.type==="in"?"✅":"🏁"}</div>
+      </div>
+    `).join("");
+
+    openModalHTML("Absensi",`
+      <select id="empSelect">${ops || `<option value="">Belum ada karyawan</option>`}</select>
+      <div style="height:10px"></div>
+      <div class="modal-actions">
+        <button class="btn green" onclick="absensi('in')">Masuk</button>
+        <button class="btn red" onclick="absensi('out')">Pulang</button>
+      </div>
+      <div class="hr"></div>
+      ${logs || `<div class="item"><div><div class="a">Belum ada absensi</div><div class="b">Mulai catat</div></div><div class="amt">-</div></div>`}
+    `);
+    return;
+  }
+
+  if(type==="kasbon"){
+    const ops=db.employees.map(e=>`<option value="${e.id}">${esc(e.name)}</option>`).join("");
+    const logs=db.kasbon.slice(0,15).map(x=>`
+      <div class="item">
+        <div>
+          <div class="a">${esc(x.empName)}</div>
+          <div class="b">${esc(x.time||"")} • ${esc(x.note||"-")}</div>
+        </div>
+        <div class="amt">${rupiah(x.amount||0)}</div>
+      </div>
+    `).join("");
+
+    openModalHTML("Kasbon",`
+      <select id="kasbonEmp">${ops || `<option value="">Belum ada karyawan</option>`}</select>
+      <div style="height:10px"></div>
+      <input id="kasbonAmount" type="number" placeholder="Nominal kasbon"/>
+      <div style="height:10px"></div>
+      <input id="kasbonNote" placeholder="Catatan (optional)"/>
+      <div class="modal-actions">
+        <button class="btn p" onclick="addKasbon()">Simpan</button>
+        <button class="btn gray" onclick="closeModal()">Tutup</button>
+      </div>
+      <div class="hr"></div>
+      ${logs || `<div class="item"><div><div class="a">Belum ada kasbon</div><div class="b">Mulai input</div></div><div class="amt">-</div></div>`}
+    `);
+    return;
+  }
+
+  if(type==="gaji"){
+    const ops=db.employees.map(e=>`<option value="${e.id}">${esc(e.name)}</option>`).join("");
+    const logs=db.salary.slice(0,15).map(x=>`
+      <div class="item">
+        <div>
+          <div class="a">${esc(x.empName)} • ${esc(x.month||"-")}</div>
+          <div class="b">${esc(x.time||"")} • ${esc(x.note||"-")}</div>
+        </div>
+        <div class="amt">${rupiah(x.amount||0)}</div>
+      </div>
+    `).join("");
+
+    openModalHTML("Gaji",`
+      <select id="gajiEmp">${ops || `<option value="">Belum ada karyawan</option>`}</select>
+      <div style="height:10px"></div>
+      <input id="gajiAmount" type="number" placeholder="Nominal gaji"/>
+      <div style="height:10px"></div>
+      <input id="gajiMonth" placeholder="Bulan (contoh: 2026-01)"/>
+      <div style="height:10px"></div>
+      <input id="gajiNote" placeholder="Catatan (optional)"/>
+      <div class="modal-actions">
+        <button class="btn green" onclick="addGaji()">Simpan</button>
+        <button class="btn gray" onclick="closeModal()">Tutup</button>
+      </div>
+      <div class="hr"></div>
+      ${logs || `<div class="item"><div><div class="a">Belum ada gaji</div><div class="b">Mulai input</div></div><div class="amt">-</div></div>`}
+    `);
+    return;
+  }
+
+  if(type==="addBySelect"){
+    const ops=db.products.map(p=>`<option value="${p.id}">${esc(p.name)} (stok:${p.stock})</option>`).join("");
+    openModalHTML("Tambah ke Cart",`
+      <select id="selProd">${ops || `<option value="">Belum ada produk</option>`}</select>
+      <div style="height:10px"></div>
+      <input id="selQty" type="number" min="1" value="1"/>
+      <div class="modal-actions">
+        <button class="btn p" onclick="addSelectedToCart()">Tambah</button>
+        <button class="btn gray" onclick="closeModal()">Tutup</button>
+      </div>
+    `);
+    return;
+  }
+
+  if(type==="bayar"){
+    openModalHTML("Pembayaran",`
+      <input id="payCash" type="number" placeholder="Uang dibayar"/>
+      <div class="modal-actions">
+        <button class="btn green" onclick="payNow()">Bayar</button>
+        <button class="btn gray" onclick="closeModal()">Batal</button>
+      </div>
+    `);
+    return;
+  }
+
+  if(type==="produkTambah"){
+    openModalHTML("Tambah Produk",`
+      <input id="prodName" placeholder="Nama produk"/>
+      <div style="height:10px"></div>
+      <div class="grid">
+        <input id="prodPrice" type="number" placeholder="Harga jual"/>
+        <input id="prodCost" type="number" placeholder="Modal"/>
+      </div>
+      <div style="height:10px"></div>
+      <input id="prodStock" type="number" placeholder="Stok awal"/>
+      <div class="modal-actions">
+        <button class="btn p" onclick="saveProduct()">Simpan</button>
+        <button class="btn gray" onclick="closeModal()">Batal</button>
+      </div>
+    `);
+    return;
+  }
+
+  openModalHTML("Info",`
+    <div class="small" style="color:var(--muted)">Menu ini belum tersedia</div>
+    <div style="height:10px"></div>
+    <button class="btn gray full" onclick="closeModal()">Tutup</button>
+  `);
+}
+
+function addSelectedToCart(){
+  const pid=document.getElementById("selProd").value;
+  const qty=Number(document.getElementById("selQty").value||1);
+  if(!pid){alert("Belum ada produk");return;}
+  for(let i=0;i<qty;i++) addToCart(pid);
+  closeModal(); renderCart();
+}
+
+/* ========= RESET ========= */
+function resetAll(){
+  if(confirm("Reset semua data + PIN + laporan?")){
+    localStorage.removeItem(KEY);
+    location.reload();
+  }
+}
+
+/* init */
+setLoginRole("kasir");
+initSession();
+</script>
+</body>
+</html>
